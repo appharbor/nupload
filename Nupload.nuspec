@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Nupload</id>
+        <version>1.0.1</version>
+        <title>Nupload</title>
+        <authors>AppHarbor</authors>
+        <owners>AppHarbor</owners>
+        <licenseUrl>https://raw.github.com/appharbor/nupload/master/LICENSE.txt</licenseUrl>
+        <projectUrl>https://github.com/appharbor/nupload</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Nupload makes it easy to support signed object downloads and asynchronous CORS-enabled form uploads to and from Amazon S3 and Google Cloud Storage</description>
+        <summary />
+        <copyright>Copyright 2012 AppHarbor Inc</copyright>
+        <tags>form upload download mvc asp.net amazon appharbor s3 gcs google cloud storage cors</tags>
+        <dependencies>
+            <dependency id="Newtonsoft.Json" version="3.5.8" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Nupload\bin\Release\Nupload.dll" target="lib\Nupload.dll" />
+    </files>
+</package>
