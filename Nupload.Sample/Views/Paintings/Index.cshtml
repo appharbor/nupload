@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Nupload.Sample.Models.Painting>
+
+@{
+	ViewBag.Title = "Paintings";
+}
+
+<h2>Uploaded Paintings</h2>
+<p>
+	<ul>
+		<li>
+			@Html.ActionLink("Upload to Amazon S3", "Create")
+		</li>
+		<li>
+			@Html.ActionLink("Upload to Google Cloud Storage", "Create", "GooglePaintings")
+		</li>
+	</ul>
+</p>
+
+<table>
+	<tr>
+		<th>
+			Name
+		</th>
+		<th>
+			ImageUrl
+		</th>
+		<th>
+		</th>
+	</tr>
+	@foreach (var item in Model) {
+		<tr>
+			<td>
+				<p>@Html.DisplayFor(modelItem => item.Name)</p>
+			</td>
+			<td>
+				<p class="url">@Html.DisplayFor(modelItem => item.ImageUrl)</p>
+			</td>
+			<td>
+				@if (item.ImageUrl.Contains("amazonaws")) {
+					@Html.ActionLink("Details", "Details", new { id = item.Id })
+				} else {
+					@Html.ActionLink("Details", "Details", "GooglePaintings", new { id = item.Id }, null)
+				}
+			</td>
+		</tr>
+	}
+</table>

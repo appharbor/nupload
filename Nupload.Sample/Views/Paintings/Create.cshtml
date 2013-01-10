@@ -1,0 +1,134 @@
+﻿@model Nupload.IUploadConfiguration
+
+@using Nupload
+@{
+	ViewBag.Title = "Upload Painting";
+}
+<h2>Create</h2>
+
+@using (Html.BeginAsyncUploadForm(new Uri(Url.Action("create"), UriKind.Relative), Model,
+	new { id = "fileupload", data_as = "imageUrl" })) {
+	
+	<input id="file" multiple="multiple" name="file" type="file" />
+	
+}
+
+<div id="uploadedPaintings">
+</div>
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+<script id="template-upload" type="text/x-tmpl">
+	<div class="upload">
+		{%=o.name%}
+		<div class="progress">
+			<div class="bar" style="width: 0%"></div>
+		</div>
+	</div>
+</script>
+
+<script id="template-painting" type="text/x-tmpl">
+	<div class="painting">
+		<img src="{%=o.signedUrl %}" alt="{%=o.name %}">
+		<span>{%= o.name %}</span>
+	</div>
+</script>
+
+<script type="text/javascript">
+	(function () {
+
+		$.ajaxSetup({
+			accepts: "json",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+			}
+		});
+
+		$('#fileupload').fileupload({
+			dataType: "xml",
+			add: function (e, data) {
+				var file, types;
+				types = /(\.|\/)(gif|jpe?g|png)$/i;
+				file = data.files[0];
+				if (types.test(file.type) || types.test(file.name)) {
+					data.context = $(tmpl("template-upload", file));
+					$('#fileupload').append(data.context);
+					data.form.find('#content-type').val(file.type);
+
+					return data.submit();
+				} else {
+					return alert("" + file.name + " is not a gif, jpeg, or png image file");
+				}
+			},
+			progress: function (e, data) {
+				var progress;
+				if (data.context) {
+					progress = parseInt(data.loaded / data.total * 100, 10);
+					return data.context.find('.bar').css('width', progress + '%');
+				}
+			},
+			done: function (e, data) {
+				var content, domain, file, path, to;
+				file = data.files[0];
+				to = $('#fileupload').data('post');
+				content = {};
+
+				var location = $(data.result).find("Location")[0].textContent;
+				content[$('#fileupload').data('as')] = decodeURIComponent(location);
+				$.post(to, content, function (data, statusText, xhr) {
+					$.get(xhr.getResponseHeader("location"), function (data2) {
+						$("#uploadedPaintings").append($(tmpl("template-painting", data2)));
+					});
+				});
+				if (data.context) {
+					return data.context.remove();
+				}
+			},
+			fail: function (e, data) {
+				alert("" + data.files[0].name + " failed to upload.");
+				console.log("Upload failed:");
+				return console.log(data);
+			}
+		});
+
+	}).call(this);
+</script>
+
+<style>
+	.upload
+	{
+		border-top: solid 1px #CCC;
+		width: 400px;
+		padding-top: 10px;
+		margin-top: 10px;
+	}
+	.upload .progress
+	{
+		margin-top: 15px;
+		margin-bottom: 15px;
+		border: solid 1px #555;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+	}
+	.upload .progress .bar
+	{
+		height: 10px;
+		background: #3EC144;
+	}
+	
+	.painting
+	{
+		width: 200px;
+		padding: 20px;
+		border: 1px solid black;
+		margin-bottom: 10px;
+	}
+	
+	.painting img
+	{
+		max-width: 200px;
+		max-height: 200px;
+	}
+</style>
