@@ -4,4 +4,4 @@ Nupload makes it easy to support signed object downloads and asynchronous CORS-e
 
 # How to Use #
 
-Check out the sample application or read [the blog post about using Nupload](https://blog.appharbor.com/2013/01/10/uploading-files-asynchronously-to-amazon-s3-and-google-cloud-storage-using-cors-nupload-and-asp-net-mvc)
+Check out the sample application or read [the blog post about using Nupload](http://blog.appharbor.com/2013/01/10/asynchronous-browser-uploads-to-s3-and-gcs-using-cors-aspnet-mvc)
