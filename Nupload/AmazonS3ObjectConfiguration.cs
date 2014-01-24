@@ -6,9 +6,9 @@ namespace Nupload
 	{
 		private readonly string _key;
 		private readonly AmazonS3CannedAcl _cannedAcl;
-		private readonly int _maxFileSize;
+		private readonly long _maxFileSize;
 
-		public AmazonS3ObjectConfiguration(string key, AmazonS3CannedAcl cannedAcl, int maxFileSize)
+		public AmazonS3ObjectConfiguration(string key, AmazonS3CannedAcl cannedAcl, long maxFileSize)
 		{
 			_key = key;
 			_cannedAcl = cannedAcl;
