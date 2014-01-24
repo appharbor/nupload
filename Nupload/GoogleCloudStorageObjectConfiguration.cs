@@ -6,9 +6,9 @@ namespace Nupload
 	{
 		private readonly string _key;
 		private readonly GoogleCloudStorageCannedAcl _cannedAcl;
-		private readonly int _maxFileSize;
+		private readonly long _maxFileSize;
 
-		public GoogleCloudStorageObjectConfiguration(string key, GoogleCloudStorageCannedAcl cannedAcl, int maxFileSize)
+		public GoogleCloudStorageObjectConfiguration(string key, GoogleCloudStorageCannedAcl cannedAcl, long maxFileSize)
 		{
 			_key = key;
 			_cannedAcl = cannedAcl;
